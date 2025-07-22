@@ -32,7 +32,6 @@ class tester():
     # Algorithm: Parametrized Value Iteration
 
     def runCollaborativeTest(self, evalEpisodes, collaboration = [0,1], plot_best_trajectory = False, plot_value_function = False, plot_optimality = False, save = None):
-
         states = [(x,y,z) for x in range(self.width) for y in range(self.height) for z in range(2**self.n_agents)] # z encode alive agents
         actions = ["↑", "↓", "←", "→"]
         gamma=0.95
@@ -271,7 +270,7 @@ class tester():
                                 if rewards[agent.id]==self.goal_reward:
                                     agent.lastUpdate(state, action, alives, prevVotes, self.goal_reward)
                         else:
-                            if len(log["trajectory"]) > 1000:
+                            if len(log["trajectory"]) > 1000: # Break if gets stuck during evaluation
                                 log["exited"] = True
                                 break
                     else: # After the last one standing
@@ -279,7 +278,7 @@ class tester():
                             for agent in agents:
                                 if rewards[agent.id]==self.goal_reward:
                                     agent.lastUpdate(state, action, alives, prevVotes, self.goal_reward)
-                        break
+                        break # Ends the episode
 
                     log["votes"].append(votes)
                     log["actions"].append(action)
