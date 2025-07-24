@@ -135,8 +135,8 @@ class tester():
             if plot_optimality:
                 plot_episodes_optimality([l.get('optimal', np.nan) for l in all_episode_logs], save=save)
 
-        return avgOptim, 100*exited/evalEpisodes
-        #return all_episode_logs
+        #return avgOptim, 100*exited/evalEpisodes
+        return all_episode_logs
 
     # ----------------------------------------------------------------------------------------------------------------------------
     # Algorithm: Q-Learning
@@ -221,8 +221,9 @@ class tester():
             if plot_optimality:
                 plot_episodes_optimality([l.get("optimal", np.nan) for l in all_episode_logs], training = trainEpisodes, save=save)
             
-        #return all_episode_logs
-        return avgOptim, 100*exited/evalEpisodes
+        #return avgOptim, 100*exited/evalEpisodes
+        return all_episode_logs
+        
     
     # ----------------------------------------------------------------------------------------------------------------------------
     # Algorithm: SARSA with Neural Network Function Approximation
@@ -327,5 +328,5 @@ class tester():
             if plot_optimality:
                 plot_episodes_optimality([l.get("optimal", np.nan) for l in all_episode_logs], training = trainEpisodes, save=save)
             
-        #return all_episode_logs
-        return avgOptim, 100*exited/evalEpisodes
+        #return avgOptim, 100*exited/evalEpisodes
+        return all_episode_logs
