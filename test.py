@@ -177,7 +177,7 @@ class tester():
                             if self.env.is_active(agent.id) or rewards[agent.id]==self.goal_reward: # To avoid dying before Q update
                                 agent.update(state, alives,action,next_state, n_alives, rewards[agent.id])
                     else:
-                        if len(log["trajectory"]) > 1000:
+                        if len(log["trajectory"]) > 1000: # Breaking point for non-terminating evaluation
                             log["exited"] = True
                             break
 
@@ -221,7 +221,8 @@ class tester():
             if plot_optimality:
                 plot_episodes_optimality([l.get("optimal", np.nan) for l in all_episode_logs], training = trainEpisodes, save=save)
             
-        return all_episode_logs
+        #return all_episode_logs
+        return avgOptim, 100*exited/evalEpisodes
     
     # ----------------------------------------------------------------------------------------------------------------------------
     # Algorithm: SARSA with Neural Network Function Approximation
@@ -289,13 +290,12 @@ class tester():
                     state = next_state
                     action = next_action
                     log["trajectory"].append(state)
-                    if episode == trainEpisodes:
+                    if episode == trainEpisodes - 1:
                         for agent in agents:
                             agent.training = False
                 if not log["exited"]:
                     log["steps"] = len(log["trajectory"])
                     log["optimal"] = log["steps"]/self.env.shortest_path_length(log["trajectory"][0])
-                    print(save, log["optimal"], episode, episodes)
                 all_episode_logs.append(log)
         except Exception as err:
             animate_trajectory(log["trajectory"], log["active_agents"], (self.width, self.height), self.env.getGoals())

@@ -124,7 +124,7 @@ def plot_Q_functions(agents, width, height):
             ax.set_title(f"A{agent.id}-{alive}")
             for h in range(height):
                 for w in range(width):
-                    ax.text(w, h, a_values[col_idx][h,w], ha='center', va='center', fontsize=12)
+                    ax.text(w, h, a_values[col_idx][h,w], ha='center', va='center', fontsize=12, color='white')
     plt.tight_layout()
     plt.show()
 

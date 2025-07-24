@@ -17,11 +17,10 @@ WALL_REWARD = -10
  
 # ----- Individual tests
 
-
-#t = tester(START_AT_CENTER, WIDTH, HEIGHT, N_AGENTS, GOAL_REWARD, EMPTY_REWARD, WALL_REWARD)
-#log = t.runCollaborativeTest(500, [0.75,1.0],True, True, True)
-#log = t.runNaiveTest(500, 1000 ,True, True, True)
-#log = t.runUnstructuredTest(500, 5000, [128,128,128], True, True, True)
+t = tester(START_AT_CENTER, WIDTH, HEIGHT, N_AGENTS, GOAL_REWARD, EMPTY_REWARD, WALL_REWARD)
+log = t.runCollaborativeTest(500, [0.75,1.0],True, True, True)
+log = t.runNaiveTest(500, 2000 ,True, True, True)
+log = t.runUnstructuredTest(500, 2000, [64,64,64], True, True, True)
 
 
 # ------ Hyperparameter optimization tests
@@ -40,8 +39,7 @@ def run_all_tests(run_single_test, param_grid): # Runs tests in parallel
             except Exception as e:
                 print(e)
             completed_jobs += 1
-            if completed_jobs % 5 == 0 or completed_jobs == total_jobs:
-                print(f"{completed_jobs} / {total_jobs} jobs done.")
+            print(f"{completed_jobs} / {total_jobs} jobs done.")
 
     return results
 
@@ -59,11 +57,11 @@ def unstructuredBestNNShape(): # Run unstructured test with different NN shape
         param_grid.append([ele]*2)
         param_grid.append([ele]*3)
     
-    data = run_all_tests(run_u_test, param_grid *100)
+    data = run_all_tests(run_u_test, param_grid * 25)
 
     grouped = defaultdict(list)
     for nn, avg, err in data:
-        grouped[nn].append((avg,err))
+        grouped[str(nn)].append((avg,err))
 
     processed = []
 
@@ -107,4 +105,4 @@ def collaborativeBestRange(): # Run collaborative test with different K boundari
 
 
 #collaborativeBestRange()
-unstructuredBestNNShape()
+#unstructuredBestNNShape()

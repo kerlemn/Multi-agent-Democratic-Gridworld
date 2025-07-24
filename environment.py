@@ -71,7 +71,7 @@ class GridWorld:
         return self.pos
     
 
-    def shortest_path_length(self, start):
+    def shortest_path_length(self, start): # From start to all the rewards
         min_path_len = float('inf')
         for order in permutations(self.goals.values()):
             current = start
